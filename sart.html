@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>SART experiment</title>
+		<script src="jspsych/dist/jspsych.js"></script>
+		<script src="jspsych/dist/plugin-html-button-response.js"></script>
+		<script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+		<link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css"/>
+		<link href="button.css" rel="stylesheet" type="text/css"/>
+		<script src="jspsych/dist/jatos.js"></script>
+	</head>
+	<body>
+		<script>
+			var jsPsych = initJsPsych({
+  				on_finish: function(){
+  					jsPsych.data.displayData();
+  				}
+  			});
+			var timeline = [];
+			var digit_set = [1,2,4,5,6,7,8,9];
+
+			var instructions = {
+				type: jsPsychHtmlButtonResponse,
+				stimulus: `<h1>Tiltott hármas kísérlet</h1>
+				<p>Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
+				kattints, vagy koppints a készüléked képernyőjére. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
+				<p>Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
+				post_trial_gap: 1000,
+				choices: ["Tovább"]
+			}
+			timeline.push(instructions)
+			var sart_trial = {
+				type: jsPsychHtmlButtonResponse,
+				stimulus: function(){
+					if(jsPsych.timelineVariable('target',true)){
+						var digit = 3
+					}else{
+						var digit = jsPsych.randomization.sampleWithoutReplacement(digit_set,1)[0]
+					}
+					return '<span style="font-size: 64px">' + digit +'</span>'
+				},
+				trial_duration: 900,
+				choices:["button"],
+				button_html: '<button class="transparent-button"></button>',
+				id:"sart"
+			}
+			var fixation_cross = {
+				type: jsPsychHtmlKeyboardResponse,
+				stimulus: '<span style="font-size: 64px">+</span>',
+				trial_duration: function(){
+					last_rt = jsPsych.data.get().last(1).values()[0].rt;
+					//console.log(last_rt)
+					if(last_rt != null){
+						return 250 + (900-last_rt)
+					}else{
+						return 250
+					}
+				},
+				on_finish: function(){
+					console.log(this.trial_duration)
+				},
+				choices: "NO_KEYS",
+				id:"fixation"
+			}
+			var sart_variables =[
+				{target: true},
+				{target: false},
+				{target: false},
+				{target: false},
+				{target: true},
+				{target: false}
+			]
+			
+			var sart_sequence = {
+				timeline: [sart_trial,fixation_cross],
+				timeline_variables: sart_variables
+			}
+			timeline.push(sart_sequence)
+			var jsPsych = initJsPsych({
+				on_trial_start: jatos.addAbortButton,
+				on_finish: () => jatos.endStudy(jsPsych.data.get().json())
+			});
+
+			jatos.onLoad(() => {
+				jsPsych.run(timeline);
+			});
+  		</script>
+	</body>
+</html>
