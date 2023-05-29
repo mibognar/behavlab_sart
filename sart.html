@@ -52,6 +52,20 @@
 			  }
 			});
 			console.log(digit_set)
+			console.log(window.navigator.userAgent)
+
+			var debug = 0
+			var stimulus_duration = 900
+			var fixation_duration = 250
+
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			debug = urlParams.get('debug')
+			
+			if(debug==1){
+				stimulus_duration = 1
+				fixation_duration = 1
+			}
 
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
@@ -62,6 +76,7 @@
 				post_trial_gap: 1000,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
+				data: { browser_type: window.navigator.userAgent}
 			}
 			timeline.push(instructions)
 			var sart_trial = {
@@ -74,7 +89,7 @@
 					}
 					return '<span style="font-size: 8vw">' + digit +'</span>'
 				},
-				trial_duration: 900,
+				trial_duration: stimulus_duration,
 				choices:["Tovább"],
 				button_html: '<button class="mybutton">%choice%</button>',
 				id:"sart"
@@ -86,9 +101,9 @@
 					last_rt = jsPsych.data.get().last(1).values()[0].rt;
 					//console.log(last_rt)
 					if(last_rt != null){
-						return 250 + (900-last_rt)
+						return fixation_duration + (stimulus_duration-last_rt)
 					}else{
-						return 250
+						return fixation_duration
 					}
 				},
 				on_finish: function(){
