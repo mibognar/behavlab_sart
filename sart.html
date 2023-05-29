@@ -10,6 +10,9 @@
 	</head>
 	<body>
 		<script>
+			jatos.onLoad(() => {
+				console.log(jatos.version)
+			});
 			var jsPsych = initJsPsych({
   				on_finish: function(){
   					jsPsych.data.displayData();
@@ -124,9 +127,8 @@
 				on_finish: () => jatos.endStudy(jsPsych.data.get().json())
 			});
 
-			jatos.onLoad(() => {
-				jsPsych.run(timeline);
-			});
+			
+			jsPsych.run(timeline);
   		</script>
 	</body>
 </html>
