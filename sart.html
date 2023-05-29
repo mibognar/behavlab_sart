@@ -62,7 +62,7 @@
 			const urlParams = new URLSearchParams(queryString);
 			debug = urlParams.get('debug')
 			
-			if(debug==1){
+			if(debug==1 || jatos.urlQueryParameters.debug==1){
 				stimulus_duration = 1
 				fixation_duration = 1
 			}
