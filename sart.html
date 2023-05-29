@@ -20,13 +20,13 @@
 
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<h1 style="font-size: 3vw">Tiltott hármas kísérlet</h1>
-				<p style="font-size: 1vw">Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
+				stimulus: `<h1 style="font-size: 3vh">Tiltott hármas kísérlet</h1>
+				<p style="font-size: 1.5vh">Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
 				kattints, vagy koppints a készüléked képernyőjére. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
-				<p style="font-size: 1vw">Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
+				<p style="font-size: 1.5vh">Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
 				post_trial_gap: 1000,
 				choices: ["Tovább"],
-				button_html: '<button style="font-size: 2vw">%choice%</button>',
+				button_html: '<button style="font-size: 5vh">%choice%</button>',
 			}
 			timeline.push(instructions)
 			var sart_trial = {
