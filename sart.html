@@ -11,18 +11,18 @@
 	<body>
 		<script>
 			jatos.onLoad(() => {
+				var debug = 0
+				var stimulus_duration = 900
+				var fixation_duration = 250
 				console.log(jatos.version)
 				var jatosdebug = jatos.urlQueryParameters.debug
-				const queryString = window.location.search;
-				const urlParams = new URLSearchParams(queryString);
-				debug = urlParams.get('debug')
 			
-				if(debug == 1 || jatosdebug == 1){
+				if(jatosdebug == 1){
 					stimulus_duration = 1
 					fixation_duration = 1
 			}
 			});
-			
+
 			var jsPsych = initJsPsych({
   				on_finish: function(){
   					jsPsych.data.displayData();
@@ -66,12 +66,6 @@
 			});
 			console.log(digit_set)
 			console.log(window.navigator.userAgent)
-
-			var debug = 0
-			var stimulus_duration = 900
-			var fixation_duration = 250
-
-			
 
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
