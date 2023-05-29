@@ -11,9 +11,6 @@
 	<body>
 		<script>
 			jatos.onLoad(() => {
-				var debug = 0
-				var stimulus_duration = 900
-				var fixation_duration = 250
 				console.log(jatos.version)
 				var jatosdebug = jatos.urlQueryParameters.debug
 			
@@ -22,12 +19,14 @@
 					fixation_duration = 1
 			}
 			});
-
+			
 			var jsPsych = initJsPsych({
   				on_finish: function(){
   					jsPsych.data.displayData();
   				}
   			});
+  			var stimulus_duration = 900
+			var fixation_duration = 250
   			// Create an array with 25 ones and 200 zeros
 			const array = Array(25).fill(1).concat(Array(200).fill(0));
 
