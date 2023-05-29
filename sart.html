@@ -20,12 +20,13 @@
 
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<h1>Tiltott hármas kísérlet</h1>
-				<p>Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
+				stimulus: `<h1 style="font-size: 3vw">Tiltott hármas kísérlet</h1>
+				<p style="font-size: 1vw">Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
 				kattints, vagy koppints a készüléked képernyőjére. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
-				<p>Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
+				<p style="font-size: 1vw">Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
 				post_trial_gap: 1000,
-				choices: ["Tovább"]
+				choices: ["Tovább"],
+				button_html: '<button style="font-size: 2vw">%choice%</button>',
 			}
 			timeline.push(instructions)
 			var sart_trial = {
@@ -36,16 +37,16 @@
 					}else{
 						var digit = jsPsych.randomization.sampleWithoutReplacement(digit_set,1)[0]
 					}
-					return '<span style="font-size: 64px">' + digit +'</span>'
+					return '<span style="font-size: 8vw">' + digit +'</span>'
 				},
 				trial_duration: 900,
-				choices:["button"],
-				button_html: '<button class="transparent-button"></button>',
+				choices:["Tovább"],
+				button_html: '<button class="mybutton">%choice%</button>',
 				id:"sart"
 			}
 			var fixation_cross = {
 				type: jsPsychHtmlKeyboardResponse,
-				stimulus: '<span style="font-size: 64px">+</span>',
+				stimulus: '<span style="font-size: 8vw">+</span>',
 				trial_duration: function(){
 					last_rt = jsPsych.data.get().last(1).values()[0].rt;
 					//console.log(last_rt)
