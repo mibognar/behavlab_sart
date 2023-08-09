@@ -121,13 +121,13 @@
 			}
 			var financial_manipulation = {
 				type: jsPsychSurveyText,
-  				preamble: `<p style="font-size: 1.5vh"> Minden felsorolt szó után írj egy másik szót, ami eszedbe jut az adott szóról, majd nyomd meg a "Tovább" gombot </p>`,
+  				preamble: `<p style="font-size: 2vh"> Minden felsorolt szó után írj egy másik szót, ami eszedbe jut az adott szóról, majd nyomd meg a "Tovább" gombot </p>`,
   				questions: [
     				{prompt: 'csöves'},
     				{prompt: 'osztálybűntudat'},
     				{prompt: 'tőkés'}
   				],
-				button_label: '<button style="font-size: 5vh">Tovább</button>',
+				button_label: 'Tovább',
   				on_finish: function(data){
   					data.q1="csöves"
   					data.q2="osztálybűntudat"
@@ -140,7 +140,7 @@
 			var sart_trial = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: function(){
-					var fontsizes = [4, 5, 6, 7, 8, 9];
+					var fontsizes = [2, 4, 6, 8, 12];
 					var randomIndex = Math.floor(Math.random() * fontsizes.length);
 					var randomValue = fontsizes[randomIndex];
 					if(jsPsych.timelineVariable('target',true)){
@@ -212,7 +212,6 @@
 			timeline.push(end_practice)
 			timeline.push(sart_sequence)
 			var jsPsych = initJsPsych({
-				on_trial_start: jatos.addAbortButton,
 				on_finish: () => jatos.endStudy(jsPsych.data.get().csv())
 			});
 
