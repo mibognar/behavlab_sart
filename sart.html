@@ -118,6 +118,16 @@
 					block_type: "end_practice"
 				}
 			}
+			var financial_manipulation = {
+				type: jsPsychSurveyText,
+  				preamble: `Minden felsorolt szó után írj egy másik szót, ami eszedbe jut az adott szóról, majd nyomd meg a "Tovább" gombot`,
+  				questions: [
+    				{prompt: 'csöves'},
+    				{prompt: 'osztálybűntudat'},
+    				{prompt: 'tőkés'}
+  				],
+  				button_label: "Tovább"
+			}
 			var sart_trial = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: function(){
@@ -186,6 +196,7 @@
 			}
 			timeline.push(instructions)
 			timeline.push(practice_sequence)
+			timeline.push(financial_manipulation)
 			timeline.push(end_practice)
 			timeline.push(sart_sequence)
 			var jsPsych = initJsPsych({
