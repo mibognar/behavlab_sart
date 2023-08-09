@@ -103,6 +103,11 @@
 					}else{
 						data.target = 0
 					}
+					if(data.response == 0){
+						data.clicked == 1
+					}else{
+						data.clicked == 0
+					}
 				},
 				choices:["Tovább"],
 				button_html: '<button class="mybutton">%choice%</button>',
