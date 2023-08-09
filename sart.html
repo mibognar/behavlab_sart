@@ -83,13 +83,19 @@
 				stimulus: function(){
 					if(jsPsych.timelineVariable('target',true)){
 						var digit = 3
+						var is_target = 1
 					}else{
 						var digit = jsPsych.randomization.sampleWithoutReplacement(digit_set,1)[0]
+						var is_target = 0
 					}
 					return '<span style="font-size: 8vw">' + digit +'</span>'
 				},
 				trial_duration: function(){
 					return stimulus_duration
+				},
+				data:{
+					stimulus_type: 'digit',
+					is_target: is_target
 				},
 				choices:["Tovább"],
 				button_html: '<button class="mybutton">%choice%</button>',
@@ -98,6 +104,9 @@
 			var fixation_cross = {
 				type: jsPsychHtmlKeyboardResponse,
 				stimulus: '<span style="font-size: 8vw">+</span>',
+				data:{
+					stimulus_type: 'fixation'
+				},
 				trial_duration: function(){
 					last_rt = jsPsych.data.get().last(1).values()[0].rt;
 					//console.log(last_rt)
