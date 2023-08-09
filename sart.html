@@ -94,7 +94,7 @@
 				stimulus: `<h1 style="font-size: 3vh">Tiltott hármas kísérlet</h1>
 				<p style="font-size: 1.5vh">Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
 				kattints, vagy koppints a zöld "Tovább" gombra. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
-				<p style="font-size: 1.5vh">Most egy rövid gyakorló rész fog következni, amelyben megismerkedhetsz a kísérlettel.</p>
+				<p style="font-size: 1.5vh">Most egy rövid gyakorló rész fog következni, amelyben megismerkedhetsz a kísérlettel, ezután egy rövid kérdőívet fogsz látni.</p>
 				<p style="font-size: 1.5vh">Nyomd meg a "Tovább" gombot a gyakorló rész elkezdéséhez</p>`,
 				post_trial_gap: 1000,
 				choices: ["Tovább"],
@@ -127,7 +127,7 @@
     				{prompt: 'osztálybűntudat'},
     				{prompt: 'tőkés'}
   				],
-				button_html: '<button style="font-size: 5vh">Tovább</button>',
+				button_label: '<button style="font-size: 5vh">Tovább</button>',
   				on_finish: function(data){
   					data.q1="csöves"
   					data.q2="osztálybűntudat"
