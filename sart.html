@@ -67,19 +67,57 @@
 			});
 			console.log(digit_set)
 			console.log(window.navigator.userAgent)
+			const practice_list = [
+				{"target":0},
+				{"target":0},
+				{"target":1},
+				{"target":0},
+				{"target":0},
+				{"target":0},
+				{"target":1},
+				{"target":0},
+				{"target":0},
+				{"target":0},
+				{"target":0},
+				{"target":0},
+				{"target":1},
+				{"target":0},
+				{"target":0},
+				{"target":0},
+				{"target":0},
+				{"target":0}
+			]
 
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<h1 style="font-size: 3vh">Tiltott hármas kísérlet</h1>
 				<p style="font-size: 1.5vh">Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
 				kattints, vagy koppints a zöld "Tovább" gombra. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
+				<p style="font-size: 1.5vh">Most egy rövid gyakorló rész fog következni, amelyben megismerkedhetsz a kísérlettel.</p>
+				<p style="font-size: 1.5vh">Nyomd meg a "Tovább" gombot a gyakorló rész elkezdéséhez</p>`,
+				post_trial_gap: 1000,
+				choices: ["Tovább"],
+				button_html: '<button style="font-size: 5vh">%choice%</button>',
+				data: {
+					browser_type: window.navigator.userAgent,
+					block_type: "instructions"
+				}
+			}
+			
+			var end_practice = {
+				type: jsPsychHtmlButtonResponse,
+				stimulus: `<h1 style="font-size: 3vh">A gyakorló résznek vége</h1>
+				<p style="font-size: 1.5vh"> A feladat továbbra is az, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
+				kattints, vagy koppints a zöld "Tovább" gombra. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
+				<p style="font-size: 1.5vh">Most a kísérleti rész fog következni, amely kb. 5 percet fog igénybe venni.</p>
 				<p style="font-size: 1.5vh">Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
 				post_trial_gap: 1000,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
-				data: { browser_type: window.navigator.userAgent}
+				data: {
+					block_type: "end_practice"
+				}
 			}
-			timeline.push(instructions)
 			var sart_trial = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: function(){
@@ -108,6 +146,7 @@
 					}else{
 						data.clicked = 0
 					}
+
 				},
 				choices:["Tovább"],
 				button_html: '<button class="mybutton">%choice%</button>',
@@ -135,11 +174,18 @@
 				id:"fixation"
 			}
 			var sart_variables = target_list
-			
+			var practice_variables = practice_list
+			var practice_sequence = {
+				timeline: [sart_trial,fixation_cross],
+				timeline_variables: practice_variables
+			}
 			var sart_sequence = {
 				timeline: [sart_trial,fixation_cross],
 				timeline_variables: sart_variables
 			}
+			timeline.push(instructions)
+			timeline.push(practice_sequence)
+			timeline.push(end_practice)
 			timeline.push(sart_sequence)
 			var jsPsych = initJsPsych({
 				on_trial_start: jatos.addAbortButton,
