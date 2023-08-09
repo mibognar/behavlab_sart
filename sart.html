@@ -121,13 +121,13 @@
 			}
 			var financial_manipulation = {
 				type: jsPsychSurveyText,
-  				preamble: `Minden felsorolt szó után írj egy másik szót, ami eszedbe jut az adott szóról, majd nyomd meg a "Tovább" gombot`,
+  				preamble: `<p style="font-size: 1.5vh"> Minden felsorolt szó után írj egy másik szót, ami eszedbe jut az adott szóról, majd nyomd meg a "Tovább" gombot </p>`,
   				questions: [
     				{prompt: 'csöves'},
     				{prompt: 'osztálybűntudat'},
     				{prompt: 'tőkés'}
   				],
-  				button_label: "Tovább",
+				button_html: '<button style="font-size: 5vh">Tovább</button>',
   				on_finish: function(data){
   					data.q1="csöves"
   					data.q2="osztálybűntudat"
