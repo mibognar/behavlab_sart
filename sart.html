@@ -94,8 +94,15 @@
 				},
 				data:{
 					stimulus_type: 'digit',
-					is_target: jsPsych.timelineVariable('target')
 				},
+				on_finish: function(data){
+					data.digit = digit;
+					if(digit == 3){
+						data.target = 1
+					}else{
+						data.target = 0
+					}
+				}
 				choices:["Tovább"],
 				button_html: '<button class="mybutton">%choice%</button>',
 				id:"sart"
