@@ -127,7 +127,15 @@
     				{prompt: 'osztálybűntudat'},
     				{prompt: 'tőkés'}
   				],
-  				button_label: "Tovább"
+  				button_label: "Tovább",
+  				on_finish: function(data){
+  					data.q1="csöves"
+  					data.q2="osztálybűntudat"
+  					data.q3="tőkés"
+  					data.r1 = data.response.Q0
+  					data.r2 = data.response.Q1
+  					data.r3 = data.response.Q2
+  				}
 			}
 			var sart_trial = {
 				type: jsPsychHtmlButtonResponse,
