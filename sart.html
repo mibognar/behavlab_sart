@@ -4,7 +4,7 @@
 		<script src="jspsych/dist/jspsych.js"></script>
 		<script src="jspsych/dist/plugin-html-button-response.js"></script>
 		<script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
-		<script src="jspsych/dist/plugin-survey-text.js"></script>
+		<script src="jspsych/dist/plugin-survey.js"></script>
 		<link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css"/>
 		<link href="button.css" rel="stylesheet" type="text/css"/>
 		<script src="jatos.js"></script>
@@ -30,6 +30,7 @@
 			var fixation_duration = 250;
 			var is_target = 0;
 			var digit;
+			var wordlist = ["pénz","hatalom","arany"]
   			// Create an array with 25 ones and 200 zeros
 			const array = Array(25).fill(1).concat(Array(200).fill(0));
 
@@ -92,11 +93,11 @@
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<h1 style="font-size: 3vh">Tiltott hármas kísérlet</h1>
-				<p style="font-size: 1.5vh">Ebben a kísérletben a képernyőn felvillanó számokat fogsz látni. A feladatod az lesz, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
-				kattints, vagy koppints a zöld "Tovább" gombra. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
-				<p style="font-size: 1.5vh">Most egy rövid gyakorló rész fog következni, amelyben megismerkedhetsz a kísérlettel, ezután egy rövid kérdőívet fogsz látni.</p>
-				<p style="font-size: 1.5vh">Nyomd meg a "Tovább" gombot a gyakorló rész elkezdéséhez</p>`,
-				post_trial_gap: 1000,
+				<p style="font-size: 1.5vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
+Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gombot a gyakorló rész elkezdéséhez!
+</p>,
+				post_trial_gap: 4000,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
 				data: {
@@ -120,21 +121,42 @@
 				}
 			}
 			var financial_manipulation = {
-				type: jsPsychSurveyText,
-  				preamble: `<p style="font-size: 2vh"> Minden felsorolt szó után írj egy másik szót, ami eszedbe jut az adott szóról, majd nyomd meg a "Tovább" gombot </p>`,
-  				questions: [
-    				{prompt: 'csöves'},
-    				{prompt: 'osztálybűntudat'},
-    				{prompt: 'tőkés'}
-  				],
+				type: jsPsychSurvey,
+				pages: [
+					[
+						{
+							type: 'text',
+							prompt: wordlist[0],
+							name: 'word0',
+							required: true
+						},
+						{
+							type: 'text',
+							prompt: wordlist[1],
+							name: 'word1',
+							required: true
+						},
+{
+							type: 'text',
+							prompt: wordlist[2],
+							name: 'word2',
+							required: true
+						}
+
+
+					],
+				],
+				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut az alábbi három szóról! Ha végzett, nyomja meg a “Tovább” gombot!",
+
+  				
 				button_label: 'Tovább',
   				on_finish: function(data){
-  					data.q1="csöves"
-  					data.q2="osztálybűntudat"
-  					data.q3="tőkés"
-  					data.r1 = data.response.Q0
-  					data.r2 = data.response.Q1
-  					data.r3 = data.response.Q2
+  					data.q1=wordlist[0]
+  					data.q2=wordlist[1]
+  					data.q3=wordlist[2]
+  					data.r1 = data.response.word0
+  					data.r2 = data.response.word1
+  					data.r3 = data.response.word2
   				}
 			}
 			var sart_trial = {
