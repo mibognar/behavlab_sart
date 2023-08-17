@@ -12,3 +12,29 @@ button.mybutton{
   color: white;
 
 }
+
+button.disabled_button{
+  transform: translate(0%, 0%);
+  position: fixed;
+  display: block;
+  bottom: 10vh;
+  height: 10vh;
+  width: 50vw;
+  left:25%;
+  background-color: gray;
+  text-align: center;
+  font-size: 5vh;
+  color: white;
+}
+
+#sv-nav-complete{
+font-size: 5vh;
+position:relative;
+left: 50%;
+transform: translate(-50%,0);
+margin-top: 20px;
+}
+
+.sv_nav_btn{
+font-size: 5vh;
+}

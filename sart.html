@@ -92,12 +92,11 @@
 
 			var instructions = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<h1 style="font-size: 3vh">Tiltott hármas kísérlet</h1>
-				<p style="font-size: 1.5vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
+				stimulus: `<h1 style="font-size: 4vh">Tiltott hármas kísérlet</h1>
+				<p style="font-size: 2vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
 Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gombot a gyakorló rész elkezdéséhez!
 </p>`,
-				post_trial_gap: 4000,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
 				data: {
@@ -108,12 +107,12 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 			
 			var end_practice = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<h1 style="font-size: 3vh">A gyakorló résznek vége</h1>
-				<p style="font-size: 1.5vh"> A feladat továbbra is az, hogy bármelyik számnál, <strong>kivéve a 3-asnál</strong>
-				kattints, vagy koppints a zöld "Tovább" gombra. Ha a felvillanó szám 3-as, ne csinálj semmit, csak várd meg, amíg eltűnik a képernyőről.</p>
-				<p style="font-size: 1.5vh">Most a kísérleti rész fog következni, amely kb. 5 percet fog igénybe venni.</p>
-				<p style="font-size: 1.5vh">Nyomd meg a "Tovább" gombot a kísérlet elkezdéséhez</p>`,
-				post_trial_gap: 1000,
+				stimulus: `<h1 style="font-size: 4vh">A gyakorló résznek vége</h1>
+				<p style="font-size: 2vh"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 5 percet fog igénybe venni.
+				A feladat szabályai változatlanok. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+</p>
+				<p style="font-size: 2vh">Ha figygelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
+				post_trial_gap: 0,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
 				data: {
@@ -147,9 +146,9 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					],
 				],
 				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut az alábbi három szóról! Ha végzett, nyomja meg a “Tovább” gombot!",
+				required_error: "Kérjük mindenhova írjon be három szót!",
+				button_label_finish: 'Tovább',
 
-  				
-				button_label: 'Tovább',
   				on_finish: function(data){
   					data.q1=wordlist[0]
   					data.q2=wordlist[1]
@@ -159,10 +158,19 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
   					data.r3 = data.response.word2
   				}
 			}
+			var prepare_trial = {
+				type: jsPsychHtmlButtonResponse,
+				stimulus:'<h1 style="font-size: 3vw">A kísérlet pillanatokon belül kezdetét veszi.</h1>',
+				trial_duration: 3000,
+				choices:["Tovább"],
+				button_html: '<button class="disabled_button" disabled>%choice%</button>',
+
+
+			}
 			var sart_trial = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: function(){
-					var fontsizes = [2, 4, 6, 8, 12];
+					var fontsizes = [6, 8, 10, 16, 20];
 					var randomIndex = Math.floor(Math.random() * fontsizes.length);
 					var randomValue = fontsizes[randomIndex];
 					if(jsPsych.timelineVariable('target',true)){
@@ -170,7 +178,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					}else{
 						digit = jsPsych.randomization.sampleWithoutReplacement(digit_set,1)[0]
 					}
-					return '<span style="font-size: '+randomValue+'vw">' + digit +'</span>'
+					return '<span style="font-size: '+randomValue+'vh">' + digit +'</span>'
 				},
 				trial_duration: function(){
 					return stimulus_duration
@@ -229,9 +237,11 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				timeline_variables: sart_variables
 			}
 			timeline.push(instructions)
+			timeline.push(prepare_trial)
 			timeline.push(practice_sequence)
 			timeline.push(financial_manipulation)
 			timeline.push(end_practice)
+			timeline.push(prepare_trial)
 			timeline.push(sart_sequence)
 			var jsPsych = initJsPsych({
 				on_finish: () => jatos.endStudy(jsPsych.data.get().csv())
