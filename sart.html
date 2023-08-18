@@ -14,11 +14,22 @@
 			jatos.onLoad(() => {
 				console.log(jatos.version)
 				var jatosdebug = jatos.urlQueryParameters.debug
-			
+				var control = jatos.urlQueryParameters.control
+				var scarcity = jatos.urlQueryParameters.scarcity
 				if(jatosdebug == 1){
 					stimulus_duration = 1
 					fixation_duration = 1
-			}
+				}
+				if(control == 1){
+					list_choice = "control"
+				}else{
+					if(scarcity == 1){
+						list_choice = "scarcity"
+					}else{
+						list_choice = "abundance"
+					}
+				}
+
 			});
 			
 			var jsPsych = initJsPsych({
@@ -26,11 +37,22 @@
   					jsPsych.data.displayData();
   				}
   			});
-  			var stimulus_duration = 900;
+			var list_choice
+			var wordlistset = {"abundance":['Passzív jövedelem', 'Amerikai nyaralás', 'Belvárosi ingatlan', 'Vadiúj Mercedes', 'Eredeti Gucci', 'Kénylemes életmód', 'Bejáró takarító', 'Villa', 'Taxizás', 'Vagyonos', 'Fűtött medence', 'Eredeti Rolex', 'Pénzügyi szabadság', 'Pénzügyi biztonság', 'Befektetések'],
+			"scarcity":['Fizetésképtelenség', 'Megszorítások', 'Rezsi', 'Anyagi kényszer', 'Élelmiszer-kiadások', 'Lakbér', 'Váratlan költségek', 'Adósság törlesztés', 'Túl alacsony jövedelem', 'Nem engedheti meg magának', 'Infláció', 'Befizetetlen számlák', 'Üzemanyag-költségek', 'Ruházati kiadások', 'Pénzügyi bizonytalanság'],
+	"control": ['Harmatos reggelek', 'Feltalálja magát', 'Mély álom', 'Megmagyaráz', 'Forró beton', 'Tisztelettudó', 'Gondolkodásmód', 'Kosárlabda-bajnokság', 'Bonyolult történet', 'Mélyre nyúló gyökérzet', 'Lehulló madártoll', 'Levegő', 'Szeszélyes időjárás', 'Fülsértő éneklés', 'Szöges ellentét', 'Kacsacsőrű emlős', 'Lenvászon', 'Teljes mellszélességgel', 'Felkiáltójel', 'Kapcsolódás', 'Figyelmes', 'Névelő', 'Szédítő magasság', 'Bozótos', 'Összetartás', 'Elharapódzott', 'Akácfák', 'Öntözni', 'Megfelelési kényszer', 'Elhalványulás']}
+  			console.log(wordlistset.abundance)
+			list_choice = "abundance"
+			console.log(wordlistset.list_choice)
+			var stimulus_duration = 900;
+			console.log(list_choice)
+			
+			console.log(wordlistset)
 			var fixation_duration = 250;
 			var is_target = 0;
 			var digit;
-			var wordlist = ["pénz","hatalom","arany"]
+			var wordlist = wordlistset.list_choice
+			console.log(wordlist)
   			// Create an array with 25 ones and 200 zeros
 			const array = Array(25).fill(1).concat(Array(200).fill(0));
 
