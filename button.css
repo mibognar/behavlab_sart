@@ -25,6 +25,7 @@ button.disabled_button{
   text-align: center;
   font-size: 5vh;
   color: white;
+  pointer-events: none;
 }
 
 #sv-nav-complete{
