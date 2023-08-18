@@ -14,45 +14,86 @@
 			jatos.onLoad(() => {
 				console.log(jatos.version)
 				var jatosdebug = jatos.urlQueryParameters.debug
-				var control = jatos.urlQueryParameters.control
-				var scarcity = jatos.urlQueryParameters.scarcity
+				var id  = jatos.urlQueryParameters.id
+				var if_demo_first  = jatos.urlQueryParameters.if_demo_first
 				if(jatosdebug == 1){
 					stimulus_duration = 1
 					fixation_duration = 1
 				}
-				if(control == 1){
-					list_choice = "control"
-				}else{
-					if(scarcity == 1){
-						list_choice = "scarcity"
-					}else{
-						list_choice = "abundance"
-					}
-				}
-
+				participant_id = id
+				demo_first = if_demo_first	
+			
+				
 			});
 			
-			var jsPsych = initJsPsych({
-  				on_finish: function(){
-  					jsPsych.data.displayData();
-  				}
-  			});
-			var list_choice
+		
+  			var control;
+			var manipulation_types = ["scarcity","mixed","abundance"]
+			var manipulation_order;
 			var wordlistset = {"abundance":['Passzív jövedelem', 'Amerikai nyaralás', 'Belvárosi ingatlan', 'Vadiúj Mercedes', 'Eredeti Gucci', 'Kénylemes életmód', 'Bejáró takarító', 'Villa', 'Taxizás', 'Vagyonos', 'Fűtött medence', 'Eredeti Rolex', 'Pénzügyi szabadság', 'Pénzügyi biztonság', 'Befektetések'],
 			"scarcity":['Fizetésképtelenség', 'Megszorítások', 'Rezsi', 'Anyagi kényszer', 'Élelmiszer-kiadások', 'Lakbér', 'Váratlan költségek', 'Adósság törlesztés', 'Túl alacsony jövedelem', 'Nem engedheti meg magának', 'Infláció', 'Befizetetlen számlák', 'Üzemanyag-költségek', 'Ruházati kiadások', 'Pénzügyi bizonytalanság'],
 	"control": ['Harmatos reggelek', 'Feltalálja magát', 'Mély álom', 'Megmagyaráz', 'Forró beton', 'Tisztelettudó', 'Gondolkodásmód', 'Kosárlabda-bajnokság', 'Bonyolult történet', 'Mélyre nyúló gyökérzet', 'Lehulló madártoll', 'Levegő', 'Szeszélyes időjárás', 'Fülsértő éneklés', 'Szöges ellentét', 'Kacsacsőrű emlős', 'Lenvászon', 'Teljes mellszélességgel', 'Felkiáltójel', 'Kapcsolódás', 'Figyelmes', 'Névelő', 'Szédítő magasság', 'Bozótos', 'Összetartás', 'Elharapódzott', 'Akácfák', 'Öntözni', 'Megfelelési kényszer', 'Elhalványulás']}
-  			console.log(wordlistset.abundance)
-			list_choice = "abundance"
-			console.log(wordlistset.list_choice)
-			var stimulus_duration = 900;
-			console.log(list_choice)
+			var myarray = randomize_manipulation(wordlistset);
+			console.log(myarray)
+			var manipulation = myarray;
+
+			function moveRandomStrings(sourceArray, destinationArray, count) {
+				if (count > sourceArray.length) {
+					console.error("Count is greater than the source array length.");
+					return;
+				}
+				for (let i = 0; i < count; i++) {
+					const randomIndex = Math.floor(Math.random() * sourceArray.length);
+					const randomString = sourceArray.splice(randomIndex, 1)[0];
+					destinationArray.push(randomString);
+				}
+			}
+			function randomize_manipulation(wordlistset){
+				var array_of_words = []
+				control = Math.floor(Math.random()*2)
+				if(control == 1){
+					moveRandomStrings(wordlistset.control, array_of_words, 3)
+					moveRandomStrings(wordlistset.control, array_of_words, 3)
+					manipulation_order = "C"
+					if_exp_cond = 0
+				}else{
+					if_exp_cond = 1
+					var randindex = Math.floor(Math.random()*manipulation_types.length)
+					var random_type = manipulation_types[randindex]
+					if(random_type == "scarcity"){
+						moveRandomStrings(wordlistset.scarcity, array_of_words, 3)
+						moveRandomStrings(wordlistset.scarcity, array_of_words, 3)
+						manipulation_order = "SS"
+					}else if(random_type == "abundance"){
+						moveRandomStrings(wordlistset.abundance, array_of_words, 3)
+						moveRandomStrings(wordlistset.abundance, array_of_words, 3)
+						manipulation_order = "AA"
+					}else{
+						var mixed_rand_index = Math.floor(Math.random()*2)
+						if(mixed_rand_index == 0){
+							moveRandomStrings(wordlistset.scarcity, array_of_words, 3)
+							moveRandomStrings(wordlistset.abundance, array_of_words, 3)
+							manipulation_order = "SA"
+						}else{
+							moveRandomStrings(wordlistset.abundance, array_of_words, 3)
+							moveRandomStrings(wordlistset.scarcity, array_of_words, 3)
+							manipulation_order = "AS"
+						}
+
+					}
+				}
+				return array_of_words
+
 			
-			console.log(wordlistset)
+			}
+			var stimulus_duration = 900;
 			var fixation_duration = 250;
+			var participant_id;
+			var demo_first;
+			var if_exp_cond;
 			var is_target = 0;
 			var digit;
-			var wordlist = wordlistset.abundance
-			console.log(wordlist)
+			var plus;
   			// Create an array with 25 ones and 200 zeros
 			const array = Array(25).fill(1).concat(Array(200).fill(0));
 
@@ -111,11 +152,10 @@
 				{"target":1, "blocktype":"practice"},
 				{"target":0, "blocktype":"practice"}
 			]
-
-			var instructions = {
+			financial_list = [{"plus":0},{"plus":3}]
+				var instructions = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<h1 style="font-size: 4vh">Tiltott hármas kísérlet</h1>
-				<p style="font-size: 2vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
+				stimulus: `<p style="font-size: 2vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
 Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gombot a gyakorló rész elkezdéséhez!
 </p>`,
@@ -123,7 +163,14 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
 				data: {
 					browser_type: window.navigator.userAgent,
-					block_type: "instructions"
+					block_type: "instructions",
+					id: participant_id,
+					demo_first: demo_first,
+					manipulation_order: manipulation_order
+				},
+				on_finish: function(){
+					console.log(participant_id)
+					console.log(demo_first)
 				}
 			}
 			
@@ -133,7 +180,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				<p style="font-size: 2vh"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 5 percet fog igénybe venni.
 				A feladat szabályai változatlanok. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 </p>
-				<p style="font-size: 2vh">Ha figygelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
+				<p style="font-size: 2vh">Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
 				post_trial_gap: 0,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
@@ -141,40 +188,88 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					block_type: "end_practice"
 				}
 			}
-			var financial_manipulation = {
+			var financial_manipulation1 = {
 				type: jsPsychSurvey,
+				on_start: function(){
+					plus = jsPsych.timelineVariable('plus',true)
+					console.log(myarray[0+plus])
+					console.log(plus)
+				},
 				pages: [
 					[
 						{
 							type: 'text',
-							prompt: wordlist[0],
+							prompt: "Válasz 1",
 							name: 'word0',
+							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 						{
 							type: 'text',
-							prompt: wordlist[1],
+							prompt: "Válasz 2",
 							name: 'word1',
+							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 {
 							type: 'text',
-							prompt: wordlist[2],
+							prompt: "Válasz 3",
 							name: 'word2',
+							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						}
 
 
 					],
 				],
-				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut az alábbi három szóról! Ha végzett, nyomja meg a “Tovább” gombot!",
-				required_error: "Kérjük mindenhova írjon be három szót!",
+				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről: " +manipulation[0]+", "+manipulation[1]+", "+manipulation[2], 
+				required_question_label: '',
 				button_label_finish: 'Tovább',
-
   				on_finish: function(data){
-  					data.q1=wordlist[0]
-  					data.q2=wordlist[1]
-  					data.q3=wordlist[2]
+					data.w1 = manipulation[0]
+					data.w2 = manipulation[1]
+					data.w3 = manipulation[2]
+  					data.r1 = data.response.word0
+  					data.r2 = data.response.word1
+  					data.r3 = data.response.word2
+  				}
+			}
+			var financial_manipulation2 = {
+				type: jsPsychSurvey,
+				pages: [
+					[
+						{
+							type: 'text',
+							prompt: "Válasz 1",
+							name: 'word0',
+							required_error: "Kérjük mindenhova írjon egy szót!",
+							required: true
+						},
+						{
+							type: 'text',
+							prompt: "Válasz 2",
+							name: 'word1',
+							required_error: "Kérjük mindenhova írjon egy szót!",
+							required: true
+						},
+{
+							type: 'text',
+							prompt: "Válasz 3",
+							name: 'word2',
+							required_error: "Kérjük mindenhova írjon egy szót!",
+							required: true
+						}
+
+
+					],
+				],
+				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről: " +manipulation[3]+", "+manipulation[4]+", "+manipulation[5], 
+				required_question_label: '',
+				button_label_finish: 'Tovább',
+  				on_finish: function(data){
+					data.w1 = manipulation[3]
+					data.w2 = manipulation[4]
+					data.w3 = manipulation[5]
   					data.r1 = data.response.word0
   					data.r2 = data.response.word1
   					data.r3 = data.response.word2
@@ -182,9 +277,9 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 			}
 			var prepare_trial = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus:'<h1 style="font-size: 3vw">A kísérlet pillanatokon belül kezdetét veszi.</h1>',
+				stimulus:'<h1 style="font-size: 4vw">A kísérlet pillanatokon belül kezdetét veszi.</h1>',
 				trial_duration: 3000,
-				choices:["Tovább"],
+				choices:["A Tovább gomb itt fog megjelenni"],
 				button_html: '<button class="disabled_button" disabled>%choice%</button>',
 
 
@@ -258,19 +353,29 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				timeline: [sart_trial,fixation_cross],
 				timeline_variables: sart_variables
 			}
+
 			timeline.push(instructions)
 			timeline.push(prepare_trial)
 			timeline.push(practice_sequence)
-			timeline.push(financial_manipulation)
+			timeline.push(financial_manipulation1)
+			timeline.push(financial_manipulation2)
 			timeline.push(end_practice)
 			timeline.push(prepare_trial)
 			timeline.push(sart_sequence)
+						
 			var jsPsych = initJsPsych({
-				on_finish: () => jatos.endStudy(jsPsych.data.get().csv())
+				on_finish: () => jatos.endStudyAndRedirect("https://elteppk.eu.qualtrics.com/jfe/form/SV_43iDxYq5Kp4iXEq?id="+participant_id+"&if_demo_first="+demo_first+"&if_exp_cond="+if_exp_cond, jsPsych.data.get().csv())
 			});
+			jsPsych.data.addProperties({
+  					participant_id: participant_id,
+  					demo_first: demo_first,
+					manipulation_order: manipulation_order,
+					if_exp_cond: if_exp_cond
 
-			
+			}),
+
 			jsPsych.run(timeline);
-  		</script>
+
+	  		</script>
 	</body>
 </html>

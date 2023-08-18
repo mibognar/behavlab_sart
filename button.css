@@ -23,7 +23,7 @@ button.disabled_button{
   left:25%;
   background-color: gray;
   text-align: center;
-  font-size: 5vh;
+  font-size: 4vh;
   color: white;
   pointer-events: none;
 }
