@@ -28,11 +28,8 @@ button.disabled_button{
   pointer-events: none;
 }
 
-#sv-nav-complete{
+#jspsych-survey-text-next{
 font-size: 5vh;
-position:relative;
-left: 50%;
-transform: translate(-50%,0);
 margin-top: 20px;
 }
 

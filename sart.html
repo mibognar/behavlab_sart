@@ -5,6 +5,7 @@
 		<script src="jspsych/dist/plugin-html-button-response.js"></script>
 		<script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
 		<script src="jspsych/dist/plugin-survey.js"></script>
+		<script src="jspsych/dist/plugin-survey-text.js"></script>
 		<link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css"/>
 		<link href="button.css" rel="stylesheet" type="text/css"/>
 		<script src="jatos.js"></script>
@@ -12,18 +13,7 @@
 	<body>
 		<script>
 			jatos.onLoad(() => {
-				console.log(jatos.version)
-				var jatosdebug = jatos.urlQueryParameters.debug
-				var id  = jatos.urlQueryParameters.id
-				var if_demo_first  = jatos.urlQueryParameters.if_demo_first
-				if(jatosdebug == 1){
-					stimulus_duration = 1
-					fixation_duration = 1
-				}
-				participant_id = id
-				demo_first = if_demo_first	
-			
-				
+				jsPsych.run(timeline)
 			});
 			
 		
@@ -165,7 +155,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				data: {
 					browser_type: window.navigator.userAgent,
 					block_type: "instructions",
-					id: participant_id,
+					participant_id: participant_id,
 					demo_first: demo_first,
 					manipulation_order: manipulation_order
 				},
@@ -190,43 +180,35 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				}
 			}
 			var financial_manipulation1 = {
-				type: jsPsychSurvey,
-				on_start: function(){
-					plus = jsPsych.timelineVariable('plus',true)
-					console.log(myarray[0+plus])
-					console.log(plus)
-				},
-				pages: [
-					[
+				type: jsPsychSurveyText,
+				questions: [
+					
 						{
-							type: 'text',
-							prompt: "1. Válasz",
+							prompt: "",
+							placeholder:"1. Válasz",
 							name: 'word0',
-							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 						{
-							type: 'text',
-							prompt: "2. Válasz",
+							prompt: "",
+							placeholder: "2. Válasz",
 							name: 'word1',
-							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
-{
-							type: 'text',
-							prompt: "3. Válasz",
+						{
+							prompt: "",
+							placeholder: "3. Válasz",
 							name: 'word2',
-							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						}
 
 
-					],
 				],
-				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről: " +manipulation[0]+", "+manipulation[1]+", "+manipulation[2], 
-				required_question_label: '',
-				button_label_finish: 'Tovább',
+				preamble: "<h1>Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről:</h1> <br></br>" +manipulation[0]+", "+manipulation[1]+", "+manipulation[2], 
+				button_label: 'Tovább',
+				post_trial_gap: 300,
   				on_finish: function(data){
+					data.block_type = "survey1"
 					data.w1 = manipulation[0]
 					data.w2 = manipulation[1]
 					data.w3 = manipulation[2]
@@ -236,39 +218,36 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
   				}
 			}
 			var financial_manipulation2 = {
-				type: jsPsychSurvey,
-				pages: [
-					[
+				type: jsPsychSurveyText,
+					questions: [
+					
 						{
-							type: 'text',
-							prompt: "1. Válasz",
+							prompt: "",
+							placeholder:"1. Válasz",
 							name: 'word0',
-							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 						{
-							type: 'text',
-							prompt: "2. Válasz",
+							prompt: "",
+							placeholder: "2. Válasz",
 							name: 'word1',
-							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
-{
-							type: 'text',
-							prompt: "3. Válasz",
+						{
+							prompt: "",
+							placeholder: "3. Válasz",
 							name: 'word2',
-							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						}
 
 
 					],
-				],
-				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről: "+newline+manipulation[3]+", "+manipulation[4]+", "+manipulation[5]	
-,
-				required_question_label: '',
-				button_label_finish: 'Tovább',
-  				on_finish: function(data){
+				preamble: "<h1>Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről:</h1> <br></br>" +manipulation[3]+", "+manipulation[4]+", "+manipulation[5], 
+				button_label: 'Tovább',
+
+
+				on_finish: function(data){
+					data.block_type = "survey2"
 					data.w1 = manipulation[3]
 					data.w2 = manipulation[4]
 					data.w3 = manipulation[5]
@@ -366,17 +345,34 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 			timeline.push(sart_sequence)
 						
 			var jsPsych = initJsPsych({
-				on_finish: () => jatos.endStudyAndRedirect("https://elteppk.eu.qualtrics.com/jfe/form/SV_43iDxYq5Kp4iXEq?id="+participant_id+"&if_demo_first="+demo_first+"&if_exp_cond="+if_exp_cond, jsPsych.data.get().csv())
-			});
-			jsPsych.data.addProperties({
-  					participant_id: participant_id,
-  					demo_first: demo_first,
-					manipulation_order: manipulation_order,
-					if_exp_cond: if_exp_cond
-
-			}),
-
-			jsPsych.run(timeline);
+				on_trial_start: () =>{
+					console.log(jatos.version)
+					var jatosdebug = jatos.urlQueryParameters.debug
+					var id  = jatos.urlQueryParameters.id
+					var if_demo_first  = jatos.urlQueryParameters.if_demo_first
+					if(jatosdebug==1){
+						fixation_duration = 1;
+						stimulus_duration = 1;
+					}
+					if(id){
+						participant_id = id
+						console.log(participant_id)
+					}
+					if(if_demo_first){
+						demo_first = if_demo_first
+						console.log(demo_first)
+					}
+					jsPsych.data.addProperties({
+  						participant_id: id,
+  						demo_first: if_demo_first,
+						manipulation_order: manipulation_order,
+						if_exp_cond: if_exp_cond
+					})
+				},
+				on_finish: () =>{
+					jatos.endStudyAndRedirect("https://elteppk.eu.qualtrics.com/jfe/form/SV_43iDxYq5Kp4iXEq?id="+participant_id+"&if_demo_first="+demo_first+"&if_exp_cond="+if_exp_cond, jsPsych.data.get().csv());
+				}
+			})
 
 	  		</script>
 	</body>

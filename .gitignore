@@ -1,3 +1,4 @@
 jspsych/
 *.sublime-project
 *.sublime-workspace
+.Rproj.user
