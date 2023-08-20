@@ -131,6 +131,7 @@
 			  }
 			});
 			console.log(digit_set)
+			var newline = "\n"
 			console.log(window.navigator.userAgent)
 			const practice_list = [
 				{"target":0, "blocktype":"practice"},
@@ -156,7 +157,7 @@
 				var instructions = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<p style="font-size: 2vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
-Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+					Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, <strong>kivéve, ha ez a szám a 3-as.</strong> Fontos, hogy próbálja meg a <strong>lehető leggyorsabban megnyomni a gombot.</strong> Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gombot a gyakorló rész elkezdéséhez!
 </p>`,
 				choices: ["Tovább"],
@@ -178,7 +179,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<h1 style="font-size: 4vh">A gyakorló résznek vége</h1>
 				<p style="font-size: 2vh"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 5 percet fog igénybe venni.
-				A feladat szabályai változatlanok. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+				A feladat szabályai változatlanok. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, <strong>kivéve, ha ez a szám a 3-as.</strong> Fontos, hogy próbálja meg a <strong>lehető leggyorsabban</strong> megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 </p>
 				<p style="font-size: 2vh">Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
 				post_trial_gap: 0,
@@ -199,21 +200,21 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					[
 						{
 							type: 'text',
-							prompt: "Válasz 1",
+							prompt: "1. Válasz",
 							name: 'word0',
 							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 						{
 							type: 'text',
-							prompt: "Válasz 2",
+							prompt: "2. Válasz",
 							name: 'word1',
 							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 {
 							type: 'text',
-							prompt: "Válasz 3",
+							prompt: "3. Válasz",
 							name: 'word2',
 							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
@@ -240,21 +241,21 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					[
 						{
 							type: 'text',
-							prompt: "Válasz 1",
+							prompt: "1. Válasz",
 							name: 'word0',
 							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 						{
 							type: 'text',
-							prompt: "Válasz 2",
+							prompt: "2. Válasz",
 							name: 'word1',
 							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
 						},
 {
 							type: 'text',
-							prompt: "Válasz 3",
+							prompt: "3. Válasz",
 							name: 'word2',
 							required_error: "Kérjük mindenhova írjon egy szót!",
 							required: true
@@ -263,7 +264,8 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 
 					],
 				],
-				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről: " +manipulation[3]+", "+manipulation[4]+", "+manipulation[5], 
+				title: "Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről: "+newline+manipulation[3]+", "+manipulation[4]+", "+manipulation[5]	
+,
 				required_question_label: '',
 				button_label_finish: 'Tovább',
   				on_finish: function(data){
