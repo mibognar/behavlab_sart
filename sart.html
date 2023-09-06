@@ -84,8 +84,8 @@
 			var is_target = 0;
 			var digit;
 			var plus;
-  			// Create an array with 25 ones and 200 zeros
-			const array = Array(25).fill(1).concat(Array(200).fill(0));
+  			// Create an array with 10 ones and 200 zeros
+			const array = Array(10).fill(1).concat(Array(200).fill(0));
 
 			// Shuffle the array randomly
 			for (let i = array.length - 1; i > 0; i--) {
@@ -113,10 +113,10 @@
 
 			const distractor_digits = [1, 2, 4, 5, 6, 7, 8, 9];
 
-			// Create an array repeating each digit 25 times
+			// Create an array repeating each digit 10 times
 			const digit_set = [];
 			distractor_digits.forEach(digit => {
-			  for (let i = 0; i < 25; i++) {
+			  for (let i = 0; i < 10; i++) {
 			    digit_set.push(digit);
 			  }
 			});
@@ -147,7 +147,11 @@
 				var instructions = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<p style="font-size: 2vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
-					Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, <strong>kivéve, ha ez a szám a 3-as.</strong> Fontos, hogy próbálja meg a <strong>lehető leggyorsabban megnyomni a gombot.</strong> Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+					Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre.
+					Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn,<strong> akkor nyomja meg a zöld "Tovább" gombot</strong>,
+					<strong>kivéve, ha ez a szám a 3-as.</strong> 
+					Fontos, hogy próbálja meg a <strong>lehető leggyorsabban megnyomni a gombot.</strong> 
+					Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gombot a gyakorló rész elkezdéséhez!
 </p>`,
 				choices: ["Tovább"],
@@ -169,7 +173,11 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<h1 style="font-size: 4vh">A gyakorló résznek vége</h1>
 				<p style="font-size: 2vh"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 5 percet fog igénybe venni.
-				A feladat szabályai változatlanok. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor nyomjon rá a zöld "Tovább" gombra, <strong>kivéve, ha ez a szám a 3-as.</strong> Fontos, hogy próbálja meg a <strong>lehető leggyorsabban</strong> megnyomni a gombot. Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+				A feladat szabályai változatlanok. 
+				A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn,
+				akkor <strong>nyomja meg a zöld "Tovább" gombot</strong>, <strong>kivéve, ha ez a szám a 3-as.</strong> 
+				Fontos, hogy próbálja meg a <strong>lehető leggyorsabban</strong> megnyomni a gombot. 
+				Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 </p>
 				<p style="font-size: 2vh">Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
 				post_trial_gap: 0,
@@ -184,19 +192,19 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 				questions: [
 					
 						{
-							prompt: "",
+							prompt: manupulation[0],
 							placeholder:"1. Válasz",
 							name: 'word0',
 							required: true
 						},
 						{
-							prompt: "",
+							prompt: manupulation[1],
 							placeholder: "2. Válasz",
 							name: 'word1',
 							required: true
 						},
 						{
-							prompt: "",
+							prompt: manupulation[2],
 							placeholder: "3. Válasz",
 							name: 'word2',
 							required: true
@@ -204,7 +212,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 
 
 				],
-				preamble: "<h1>Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről:</h1> <br></br>" +manipulation[0]+", "+manipulation[1]+", "+manipulation[2], 
+				preamble: "<h1>Írja le az első szót vagy kifejezést ami eszébe jut a következő kifejezésekről</h1>", 
 				button_label: 'Tovább',
 				post_trial_gap: 300,
   				on_finish: function(data){
@@ -222,19 +230,19 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					questions: [
 					
 						{
-							prompt: "",
+							prompt: manupulation[3],
 							placeholder:"1. Válasz",
 							name: 'word0',
 							required: true
 						},
 						{
-							prompt: "",
+							prompt: manupulation[4],
 							placeholder: "2. Válasz",
 							name: 'word1',
 							required: true
 						},
 						{
-							prompt: "",
+							prompt: manupulation[5],
 							placeholder: "3. Válasz",
 							name: 'word2',
 							required: true
@@ -242,7 +250,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 
 
 					],
-				preamble: "<h1>Írja le az első 3 szót vagy kifejezést ami eszébe jut a következő kifejezésekről:</h1> <br></br>" +manipulation[3]+", "+manipulation[4]+", "+manipulation[5], 
+				preamble: "<h1>Írja le az első szót vagy kifejezést ami eszébe jut a következő kifejezésekről</h1>", 
 				button_label: 'Tovább',
 
 
