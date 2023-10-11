@@ -358,6 +358,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					var jatosdebug = jatos.urlQueryParameters.debug
 					var id  = jatos.urlQueryParameters.id
 					var if_demo_first  = jatos.urlQueryParameters.if_demo_first
+					var coll = jatos.urlQueryParameters.coll
 					if(jatosdebug==1){
 						fixation_duration = 1;
 						stimulus_duration = 1;
@@ -378,7 +379,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					})
 				},
 				on_finish: () =>{
-					jatos.endStudyAndRedirect("https://elteppk.eu.qualtrics.com/jfe/form/SV_43iDxYq5Kp4iXEq?id="+participant_id+"&if_demo_first="+demo_first+"&if_exp_cond="+if_exp_cond, jsPsych.data.get().csv());
+					jatos.endStudyAndRedirect("https://elteppk.eu.qualtrics.com/jfe/form/SV_6WCIsIRIgsHMj9I?id="+participant_id+"&if_demo_first="+demo_first+"&if_exp_cond="+if_exp_cond+"&coll="+coll, jsPsych.data.get().csv());
 				}
 			})
 
