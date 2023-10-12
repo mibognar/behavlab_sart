@@ -84,6 +84,7 @@
 			var is_target = 0;
 			var digit;
 			var plus;
+			var coll;
   			// Create an array with 10 ones and 200 zeros
 			const array = Array(10).fill(1).concat(Array(80).fill(0));
 
@@ -358,7 +359,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					var jatosdebug = jatos.urlQueryParameters.debug
 					var id  = jatos.urlQueryParameters.id
 					var if_demo_first  = jatos.urlQueryParameters.if_demo_first
-					var coll = jatos.urlQueryParameters.coll
+					var coll_var = jatos.urlQueryParameters.coll
 					if(jatosdebug==1){
 						fixation_duration = 1;
 						stimulus_duration = 1;
@@ -370,6 +371,10 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					if(if_demo_first){
 						demo_first = if_demo_first
 						console.log(demo_first)
+					}
+					if(coll_var){
+						coll = coll_var
+						console.log(coll_var)
 					}
 					jsPsych.data.addProperties({
   						participant_id: id,
