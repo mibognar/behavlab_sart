@@ -22,6 +22,7 @@
   			var control;
   			let viewportmeta = document.querySelector('meta')
   			console.log(viewportmeta)
+  			console.log(mobilecheck())
 			var manipulation_types = ["scarcity","mixed","abundance"]
 			var manipulation_order;
 			var wordlistset = {"abundance":['Passzív jövedelem', 'Amerikai nyaralás', 'Belvárosi ingatlan', 'Vadiúj Mercedes', 'Eredeti Gucci', 'Kénylemes életmód', 'Bejáró takarító', 'Villa', 'Taxizás', 'Vagyonos', 'Fűtött medence', 'Eredeti Rolex', 'Pénzügyi szabadság', 'Pénzügyi biztonság', 'Befektetések'],
@@ -177,16 +178,20 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					console.log(participant_id)
 				}
 			}
-			
+			var end_practice_title = {
+				type: jsPsychHtmlButtonResponse,
+				stimulus: `<h1 style="font-size: 3vh; line-height: 2">Ezzel vége a gyakorló résznek. Kattintson a tovább gombra a továbblépéshez!</h1>`,
+				post_trial_gap: 0,
+				choices: ["Tovább"],
+				button_html: '<button style="font-size: 5vh">%choice%</button>',
+				data: {
+					block_type: "end_practice_title"
+				}
+			}
 			var end_practice = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<h1 style="font-size: 4vh">A gyakorló résznek vége</h1>
-				<p style="font-size: 2vh; line-height: 2"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 2 percet fog igénybe venni.
-				A feladat szabályai változatlanok. 
-				A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn,
-				akkor <strong>nyomja meg a zöld "Tovább" gombot</strong>, <strong>kivéve, ha ez a szám a 3-as.</strong> 
-				Fontos, hogy próbálja meg a <strong>lehető leggyorsabban</strong> megnyomni a gombot. 
-				Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
+				stimulus: `<p style="font-size: 2vh; line-height: 2"> Most ismételten a figyelmi feladat elvégezésére kérjük. Ezúttal a feladat kevesebb, mint 2 percet fog igénybe venni. A feladat szabályai változatlanok. Egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn, akkor <strong>nyomja meg a zöld "Tovább" gombot</strong>, kivéve, ha ez a szám a 3-as. Fontos, hogy próbálja meg a lehető leggyorsabban megnyomni a gombot. <strong>Ha a felvillanó szám 3-as, ne csináljon semmit</strong>,csak várja meg, amíg eltűnik a képernyőről.
+Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez!
 </p>
 				<p style="font-size: 2vh; line-height: 2">Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
 				post_trial_gap: 0,
@@ -221,7 +226,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 
 
 				],
-				preamble: "<h1>Írja le az első szót vagy kifejezést, ami eszébe jut a következő kifejezésekről!</h1>", 
+				preamble: `<h1 style="line-height: 2">Írja le az első szót vagy kifejezést, ami eszébe jut a következő kifejezésekről!</h1>`, 
 				button_label: 'Tovább',
 				post_trial_gap: 300,
   				on_finish: function(data){
@@ -259,7 +264,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 
 
 					],
-				preamble: "<h1>Írja le az első szót vagy kifejezést, ami eszébe jut a következő kifejezésekről!</h1>", 
+				preamble: `<h1 style="line-height: 2">Írja le az első szót vagy kifejezést, ami eszébe jut a következő kifejezésekről!</h1>`, 
 				button_label: 'Tovább',
 
 
@@ -356,6 +361,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 			timeline.push(instructions)
 			timeline.push(prepare_trial)
 			timeline.push(practice_sequence)
+			timeline.push(end_practice_title)
 			timeline.push(financial_manipulation1)
 			timeline.push(financial_manipulation2)
 			timeline.push(end_practice)
