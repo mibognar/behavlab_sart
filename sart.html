@@ -8,6 +8,7 @@
 		<script src="jspsych/dist/plugin-survey-text.js"></script>
 		<link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css"/>
 		<link href="button.css" rel="stylesheet" type="text/css"/>
+		<link href="syles.css" rel="stylesheet" type="text/css"/>
 		<script src="jatos.js"></script>
 	</head>
 	<body>
@@ -26,6 +27,16 @@
 			var myarray = randomize_manipulation(wordlistset);
 			console.log(myarray)
 			var manipulation = myarray;
+
+			function zoomOutMobile() {
+			  var viewport = document.querySelector('meta[name="viewport"]');
+
+			  if ( viewport ) {
+			    viewport.content = "initial-scale=0.1";
+			    viewport.content = "width=1200";
+			  }
+			}
+
 
 			function moveRandomStrings(sourceArray, destinationArray, count) {
 				if (count > sourceArray.length) {
@@ -146,7 +157,7 @@
 			financial_list = [{"plus":0},{"plus":3}]
 				var instructions = {
 				type: jsPsychHtmlButtonResponse,
-				stimulus: `<p style="font-size: 2vh">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
+				stimulus: `<p style="font-size: 2vh; line-height: 2">A következőkben egy asszociációs és egy figyelmi feladatot kell megoldania.
 					Először egy rövid gyakorló részben tud megismerkedni a figyelmi feladattal. A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre.
 					Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn,<strong> akkor nyomja meg a zöld "Tovább" gombot</strong>,
 					<strong>kivéve, ha ez a szám a 3-as.</strong> 
@@ -170,14 +181,14 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 			var end_practice = {
 				type: jsPsychHtmlButtonResponse,
 				stimulus: `<h1 style="font-size: 4vh">A gyakorló résznek vége</h1>
-				<p style="font-size: 2vh"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 2 percet fog igénybe venni.
+				<p style="font-size: 2vh; line-height: 2"> Most ismételten a figyelmi feladatot kell elvégeznie, ezúttal nagyjából 2 percet fog igénybe venni.
 				A feladat szabályai változatlanok. 
 				A kísérlet során egyjegyű számok fognak megjelenni a képernyőn egy rövid időre. Az Ön feladata az lesz, hogy ha megjelenik egy szám a képernyőn,
 				akkor <strong>nyomja meg a zöld "Tovább" gombot</strong>, <strong>kivéve, ha ez a szám a 3-as.</strong> 
 				Fontos, hogy próbálja meg a <strong>lehető leggyorsabban</strong> megnyomni a gombot. 
 				Ha a felvillanó szám 3-as, ne csináljon semmit, csak várja meg, amíg eltűnik a képernyőről.
 </p>
-				<p style="font-size: 2vh">Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
+				<p style="font-size: 2vh; line-height: 2">Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a "Tovább" gombot a feladat elkezdéséhez</p>`,
 				post_trial_gap: 0,
 				choices: ["Tovább"],
 				button_html: '<button style="font-size: 5vh">%choice%</button>',
@@ -282,6 +293,7 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					}else{
 						digit = jsPsych.randomization.sampleWithoutReplacement(digit_set,1)[0]
 					}
+					zoomOutMobile();
 					return '<span style="font-size: '+randomValue+'vh">' + digit +'</span>'
 				},
 				trial_duration: function(){
