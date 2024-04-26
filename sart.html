@@ -10,6 +10,7 @@
 		<link href="button.css" rel="stylesheet" type="text/css"/>
 		<link href="syles.css" rel="stylesheet" type="text/css"/>
 		<script src="jatos.js"></script>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 	</head>
 	<body>
 		<script>
@@ -19,6 +20,8 @@
 			
 		
   			var control;
+  			let viewportmeta = document.querySelector('meta')
+  			console.log(viewportmeta)
 			var manipulation_types = ["scarcity","mixed","abundance"]
 			var manipulation_order;
 			var wordlistset = {"abundance":['Passzív jövedelem', 'Amerikai nyaralás', 'Belvárosi ingatlan', 'Vadiúj Mercedes', 'Eredeti Gucci', 'Kénylemes életmód', 'Bejáró takarító', 'Villa', 'Taxizás', 'Vagyonos', 'Fűtött medence', 'Eredeti Rolex', 'Pénzügyi szabadság', 'Pénzügyi biztonság', 'Befektetések'],
@@ -29,8 +32,9 @@
 			var manipulation = myarray;
 
 			function zoomOutMobile() {
-			  const viewportmeta = document.querySelector('meta[name=viewport]');
-			  viewportmeta.setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0");
+			  
+				const viewportmeta = document.querySelector('meta[name=viewport]');
+				viewportmeta.setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0");
 			}
 
 
