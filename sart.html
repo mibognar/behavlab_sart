@@ -29,12 +29,8 @@
 			var manipulation = myarray;
 
 			function zoomOutMobile() {
-			  var viewport = document.querySelector('meta[name="viewport"]');
-
-			  if ( viewport ) {
-			    viewport.content = "initial-scale=0.1";
-			    viewport.content = "width=1200";
-			  }
+			  const viewportmeta = document.querySelector('meta[name=viewport]');
+			  viewportmeta.setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0");
 			}
 
 
@@ -288,12 +284,12 @@ Ha figyelmesen elolvasta az instrukciókat, akkor nyomja meg a “Tovább” gom
 					var fontsizes = [6, 8, 10, 16, 20];
 					var randomIndex = Math.floor(Math.random() * fontsizes.length);
 					var randomValue = fontsizes[randomIndex];
+					zoomOutMobile();
 					if(jsPsych.timelineVariable('target',true)){
 						digit = 3
 					}else{
 						digit = jsPsych.randomization.sampleWithoutReplacement(digit_set,1)[0]
 					}
-					zoomOutMobile();
 					return '<span style="font-size: '+randomValue+'vh">' + digit +'</span>'
 				},
 				trial_duration: function(){
