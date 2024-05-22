@@ -25,9 +25,74 @@
   			console.log(mobilecheck())
 			var manipulation_types = ["scarcity","mixed","abundance"]
 			var manipulation_order;
-			var wordlistset = {"abundance":['Passzív jövedelem', 'Amerikai nyaralás', 'Belvárosi ingatlan', 'Vadiúj Mercedes', 'Eredeti Gucci', 'Kénylemes életmód', 'Bejáró takarító', 'Villa', 'Taxizás', 'Vagyonos', 'Fűtött medence', 'Eredeti Rolex', 'Pénzügyi szabadság', 'Pénzügyi biztonság', 'Befektetések'],
-			"scarcity":['Fizetésképtelenség', 'Megszorítások', 'Rezsi', 'Anyagi kényszer', 'Élelmiszer-kiadások', 'Lakbér', 'Váratlan költségek', 'Adósság törlesztés', 'Túl alacsony jövedelem', 'Nem engedheti meg magának', 'Infláció', 'Befizetetlen számlák', 'Üzemanyag-költségek', 'Ruházati kiadások', 'Pénzügyi bizonytalanság'],
-	"control": ['Harmatos reggelek', 'Feltalálja magát', 'Mély álom', 'Megmagyaráz', 'Forró beton', 'Tisztelettudó', 'Gondolkodásmód', 'Kosárlabda-bajnokság', 'Bonyolult történet', 'Mélyre nyúló gyökérzet', 'Lehulló madártoll', 'Levegő', 'Szeszélyes időjárás', 'Fülsértő éneklés', 'Szöges ellentét', 'Kacsacsőrű emlős', 'Lenvászon', 'Teljes mellszélességgel', 'Felkiáltójel', 'Kapcsolódás', 'Figyelmes', 'Névelő', 'Szédítő magasság', 'Bozótos', 'Összetartás', 'Elharapódzott', 'Akácfák', 'Öntözni', 'Megfelelési kényszer', 'Elhalványulás']}
+			var wordlistset = {
+    "abundance": [
+        "Pénzügyi bizonytalanság",
+        "Passzív jövedelem",
+        "Amerikai nyaralás",
+        "Belvárosi ingatlan",
+        "Vadiúj Mercedes",
+        "Eredeti Gucci",
+        "Kényelmes életmód",
+        "Bejáró takarító",
+        "Luxusvilla",
+        "Taxizás",
+        "Vagyonos",
+        "Fűtött medence",
+        "Eredeti Rolex",
+        "Pénzügyi szabadság",
+        "Pénzügyi biztonság",
+        "Befektetések"
+    ],
+    "scarcity": [
+        "Fizetésképtelenség",
+        "Megszorítások",
+        "Rezsi",
+        "Anyagi kényszer",
+        "Élelmiszer-kiadások",
+        "Lakbér",
+        "Váratlan költségek",
+        "Adósság törlesztés",
+        "Túl alacsony jövedelem",
+        "Nem engedheti meg magának",
+        "Infláció",
+        "Befizetetlen számlák",
+        "Üzemanyag-költségek",
+        "Ruházati kiadások"
+    ],
+    "control": [
+        "Gondolkodásmód",
+        "Akácfák",
+        "Kamu",
+        "Mély álom",
+        "Kosárlabda-bajnokság",
+        "Lenvászon",
+        "Harmatos reggelek",
+        "Megfelelési kényszer",
+        "Mélyre nyúló gyökérzet",
+        "Nem találja fel magát",
+        "Levegő",
+        "Bonyolult történetek",
+        "Hidegvíz-csap",
+        "Hosszú magyarázkodás",
+        "Teljes mellszélességgel",
+        "Lehulló madártoll",
+        "Szeszélyes időjárás",
+        "Forró beton",
+        "Fülsértő éneklés",
+        "Szöges ellentét",
+        "Szédítő magasság",
+        "Szárazföldi emlős",
+        "Felkiáltójel",
+        "Barátkozás",
+        "Tisztelettudó",
+        "Gyakori öntözés",
+        "Szoros összetartozás",
+        "Halvány festés",
+        "Figyelmes hallgatóság",
+        "Bozótosok"
+    ]
+}
 			var myarray = randomize_manipulation(wordlistset);
 			console.log(myarray)
 			var manipulation = myarray;
